@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Weather</h1>
+    <input id="city" type="text" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
+    <h2 id="weatherInfo"></h2>
+
+    <script>
+        async function getWeather() {
+            let city = document.getElementById("city").value
+            let apiKey = "912b391751e19784d6353aab9a208e59"
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+            
+            let response = await fetch(url)
+            let data = await response.json()
+
+            if (response.ok) {
+                let temp = data.main.temp
+                let description = data.weather[0].description
+                document.getElementById("weatherInfo").innerText = `${city}: ${temp}°C, ${description}`
+            } else {
+                document.getElementById("weatherInfo").innerText = "City not found"
+            }
+        }
+    </script>
+</body>
+</html>
